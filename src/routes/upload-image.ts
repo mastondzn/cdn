@@ -51,14 +51,8 @@ export const route = defineRoute({
             },
         });
 
-        const url = new URL(ctx.req.raw.url);
-        url.pathname = `/${filename}`;
-        for (const [key] of url.searchParams.entries()) {
-            url.searchParams.delete(key);
-        }
+        const url = `${new URL(ctx.req.raw.url).origin}/${filename}`;
 
-        console.log(url.href);
-
-        return ctx.json({ status: 'ok', slug, filename, url: url.href });
+        return ctx.json({ status: 'ok', slug, filename, url });
     },
 });
