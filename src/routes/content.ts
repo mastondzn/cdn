@@ -11,7 +11,7 @@ export const route = defineRoute({
         if (!image) return ctx.notFound();
 
         const contentType =
-            image.customMetadata?.['type'] ?? `image/${slug.split('.').at(-1) ?? 'png'}`;
+            image.customMetadata?.['content-type'] ?? `image/${slug.split('.').at(-1) ?? 'png'}`;
 
         return ctx.newResponse(image.body, {
             status: 200,
