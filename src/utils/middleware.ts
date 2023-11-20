@@ -18,7 +18,7 @@ export const defineMiddleware = <
 
 export type Middleware = ReturnType<typeof defineMiddleware>;
 
-export const applyMiddleware = (app: Router, middleware: Middleware) => {
+export const registerMiddleware = (app: Router, middleware: Middleware) => {
     if (Array.isArray(middleware.handler)) {
         app.use(middleware.path, ...middleware.handler);
     } else {

@@ -21,7 +21,7 @@ export const defineRoute = <
 
 export type Route = ReturnType<typeof defineRoute>;
 
-export const applyRoute = (app: Router, route: Route) => {
+export const registerRoute = (app: Router, route: Route) => {
     if (route.methods === 'all') {
         app.all(route.path, route.handler);
     } else {

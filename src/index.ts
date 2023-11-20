@@ -4,18 +4,18 @@ import { type Env, envSchema } from './env';
 import * as middlewares from './middlewares';
 import * as routes from './routes';
 import { type Router } from './types';
-import { applyMiddleware } from './utils/middleware';
+import { registerMiddleware } from './utils/middleware';
 import { json } from './utils/responses';
-import { applyRoute } from './utils/route';
+import { registerRoute } from './utils/route';
 
 const app: Router = new Hono<{ Bindings: Env }>();
 
 for (const middleware of Object.values(middlewares)) {
-    applyMiddleware(app, middleware);
+    registerMiddleware(app, middleware);
 }
 
 for (const route of Object.values(routes)) {
-    applyRoute(app, route);
+    registerRoute(app, route);
 }
 
 export default {
