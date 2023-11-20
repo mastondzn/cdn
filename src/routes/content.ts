@@ -10,7 +10,8 @@ export const route = defineRoute({
         const image = await BUCKET.get(slug);
         if (!image) return ctx.notFound();
 
-        const contentType = image.customMetadata?.['type'] ?? `image/${slug.split('.').at(-1)}`;
+        const contentType =
+            image.customMetadata?.['type'] ?? `image/${slug.split('.').at(-1) ?? 'png'}`;
 
         return ctx.newResponse(image.body, {
             status: 200,
