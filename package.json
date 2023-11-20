@@ -1,6 +1,6 @@
 {
     "name": "@mastondzn/cdn",
-    "description": "Personal image uploader, built with Cloudflare Workers & R2.",
+    "description": "Personal image/file uploader, built with Cloudflare Workers & R2.",
     "version": "0.0.1",
     "private": true,
     "repository": {
