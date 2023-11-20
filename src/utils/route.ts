@@ -7,11 +7,11 @@ export const defineRoute = <
     const TPath extends string,
     THandler extends Handler<{ Bindings: Env }, TPath>,
 >(route: {
-    name?: string;
-
+    // TODO: Implement priority
     // https://hono.dev/api/routing#routing-priority
-    priority?: number;
+    // priority?: number;
 
+    name?: string;
     path: TPath;
     methods: ('GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS')[] | 'all';
     handler: THandler;

@@ -2,6 +2,8 @@ name = "cdn"
 main = "src/index.ts"
 compatibility_date = "2023-10-30"
 
+routes = [{ pattern = "i.maston.dev/*", zone_name = "maston.dev" }]
+
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.
 # Docs: https://developers.cloudflare.com/workers/platform/environment-variables
