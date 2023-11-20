@@ -10,8 +10,13 @@ export const route = defineRoute({
         const image = await BUCKET.get(slug);
         if (!image) return ctx.notFound();
 
-        const contentType =
-            image.customMetadata?.['content-type'] ?? `image/${slug.split('.').at(-1) ?? 'png'}`;
+        const contentType = image.customMetadata?.['content-type'];
+        if (!contentType) {
+            return ctx.json(
+                { error: 'Could not get MIME type from metadata of this bucket object' },
+                { status: 500 },
+            );
+        }
 
         return ctx.newResponse(image.body, {
             status: 200,
