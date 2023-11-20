@@ -6,6 +6,7 @@
         "type": "git",
         "url": "https://github.com/mastondzn/cdn.git"
     },
+    "license": "GPL-3.0-or-later",
     "scripts": {
         "deploy": "wrangler deploy",
         "dev": "wrangler dev --port 3002",
