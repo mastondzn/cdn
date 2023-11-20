@@ -8,7 +8,9 @@ export const route = defineRoute({
         const { BUCKET } = ctx.env;
 
         const image = await BUCKET.get(slug);
-        if (!image) return ctx.notFound();
+        if (!image) {
+            return ctx.notFound();
+        }
 
         const contentType = image.customMetadata?.['content-type'];
         if (!contentType) {
