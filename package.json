@@ -8,8 +8,8 @@
     },
     "scripts": {
         "deploy": "wrangler deploy",
-        "dev": "wrangler dev",
-        "start": "wrangler dev",
+        "dev": "wrangler dev --port 3002",
+        "start": "wrangler dev  --port 3002",
         "format": "prettier --write \"**/*.{ts,tsx,md,json,js,mjs,cjs,yml,yaml}\"",
         "format:check": "prettier -c \"**/*.{ts,tsx,md,json,js,mjs,cjs,yml,yaml}\"",
         "lint": "eslint ./src",

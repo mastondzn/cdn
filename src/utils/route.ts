@@ -8,8 +8,12 @@ export const defineRoute = <
     THandler extends Handler<{ Bindings: Env }, TPath>,
 >(route: {
     name?: string;
+
+    // https://hono.dev/api/routing#routing-priority
+    priority?: number;
+
     path: TPath;
-    methods: ('get' | 'post' | 'put' | 'delete' | 'patch' | 'head' | 'options')[] | 'all';
+    methods: ('GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS')[] | 'all';
     handler: THandler;
 }) => {
     return route;
@@ -21,9 +25,6 @@ export const applyRoute = (app: Router, route: Route) => {
     if (route.methods === 'all') {
         app.all(route.path, route.handler);
     } else {
-        for (const method of new Set(route.methods)) {
-            // @ts-expect-error we cannot make ts know that this is ok (or maybe i dont know how)
-            app[method](route.path, route.handler);
-        }
+        app.on(route.methods, route.path, route.handler);
     }
 };

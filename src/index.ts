@@ -14,9 +14,9 @@ for (const middleware of Object.values(middlewares)) {
     applyMiddleware(app, middleware);
 }
 
-// for (const route of Object.values(routes)) {
-//     applyRoute(app, route);
-// }
+for (const route of Object.values(routes)) {
+    applyRoute(app, route);
+}
 
 export default {
     async fetch(request: Request, _env: unknown): Promise<Response> {
