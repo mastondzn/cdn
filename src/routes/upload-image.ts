@@ -1,5 +1,4 @@
-import { defineRoute } from '~/utils/route';
-import { generateSlug } from '~/utils/slug';
+import { defineRoute, generateSlug } from '~/utils';
 
 export const route = defineRoute({
     methods: ['POST'],

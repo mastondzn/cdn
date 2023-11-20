@@ -4,9 +4,7 @@ import { type Env, envSchema } from './env';
 import * as middlewares from './middlewares';
 import * as routes from './routes';
 import { type Router } from './types';
-import { registerMiddleware } from './utils/middleware';
-import { json } from './utils/responses';
-import { registerRoute } from './utils/route';
+import { json, registerMiddleware, registerRoute } from './utils';
 
 const app: Router = new Hono<{ Bindings: Env }>();
 

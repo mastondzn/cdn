@@ -1,4 +1,4 @@
-import { defineRoute } from '~/utils/route';
+import { defineRoute } from '~/utils';
 
 export const route = defineRoute({
     methods: ['GET'],

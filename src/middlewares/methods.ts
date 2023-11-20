@@ -1,4 +1,4 @@
-import { defineMiddleware } from '~/utils/middleware';
+import { defineMiddleware } from '~/utils';
 
 export const middleware = defineMiddleware({
     path: '*',
