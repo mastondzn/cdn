@@ -21,25 +21,24 @@ export const route = defineRoute({
         let filename = `${slug}.${extension}`;
         const { BUCKET } = ctx.env;
 
-        let existing = true;
         let tries = 0;
 
         // idk why im even doing this
-        while (existing) {
-            const existingMeta = await BUCKET.head(filename);
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+        while (true) {
+            const existing = await BUCKET.head(filename);
 
-            if (existingMeta) {
+            if (existing) {
                 slug = generateSlug();
                 filename = `${slug}.${extension}`;
+                tries++;
             } else {
-                existing = false;
+                break;
             }
 
             if (tries > 2) {
                 return ctx.json({ error: 'Failed to generate unique slug.' }, { status: 500 });
             }
-
-            tries++;
         }
 
         await BUCKET.put(filename, image, {
