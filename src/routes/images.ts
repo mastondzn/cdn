@@ -2,12 +2,12 @@ import { defineRoute } from '~/utils';
 
 export const route = defineRoute({
     methods: ['GET'],
-    path: '/:slug',
+    path: '/:filename',
     handler: async (ctx) => {
-        const slug = ctx.req.param('slug');
+        const filename = ctx.req.param('filename');
         const { BUCKET } = ctx.env;
 
-        const image = await BUCKET.get(slug);
+        const image = await BUCKET.get(`images/${filename}`);
         if (!image) {
             return ctx.notFound();
         }

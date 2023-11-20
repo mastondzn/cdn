@@ -27,7 +27,7 @@ export const route = defineRoute({
                 const slug = generateSlug();
                 const filename = `${slug}.${extension}`;
 
-                const existing = await BUCKET.head(filename);
+                const existing = await BUCKET.head(`images/${filename}`);
 
                 if (existing) {
                     tries++;
@@ -46,7 +46,7 @@ export const route = defineRoute({
             return ctx.json({ error: 'Failed to generate unique filename' }, { status: 500 });
         }
 
-        await BUCKET.put(filename, image, {
+        await BUCKET.put(`images/${filename}`, image, {
             customMetadata: {
                 'content-type': image.type,
                 'original-filename': image.name,
