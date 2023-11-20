@@ -60,7 +60,7 @@ module.exports = defineConfig({
             },
         ],
         '@typescript-eslint/no-non-null-assertion': 'warn',
-        '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/require-await': 'warn',
 
         'unicorn/no-null': 'off',
         'unicorn/prevent-abbreviations': 'off',
