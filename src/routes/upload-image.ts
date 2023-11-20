@@ -17,28 +17,33 @@ export const route = defineRoute({
             return ctx.json({ error: 'Invalid image extension' }, { status: 400 });
         }
 
-        let slug = generateSlug();
-        let filename = `${slug}.${extension}`;
         const { BUCKET } = ctx.env;
 
-        let tries = 0;
+        const generateFilename = async () => {
+            let tries = 0;
 
-        // idk why im even doing this
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
-        while (true) {
-            const existing = await BUCKET.head(filename);
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+            while (true) {
+                const slug = generateSlug();
+                const filename = `${slug}.${extension}`;
 
-            if (existing) {
-                slug = generateSlug();
-                filename = `${slug}.${extension}`;
-                tries++;
-            } else {
-                break;
+                const existing = await BUCKET.head(filename);
+
+                if (existing) {
+                    tries++;
+                } else {
+                    return { filename, slug };
+                }
+
+                if (tries > 2) {
+                    return { filename: null, slug: null };
+                }
             }
+        };
 
-            if (tries > 2) {
-                return ctx.json({ error: 'Failed to generate unique slug.' }, { status: 500 });
-            }
+        const { filename, slug } = await generateFilename();
+        if (!filename || !slug) {
+            return ctx.json({ error: 'Failed to generate unique filename' }, { status: 500 });
         }
 
         await BUCKET.put(filename, image, {
