@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 
-import { type Env, envSchema } from './env';
+import { type Env, envSchema, parseEnv } from './env';
 import * as middlewares from './middlewares';
 import * as routes from './routes';
 import { type Router } from './types';
@@ -17,13 +17,13 @@ for (const route of Object.values(routes)) {
 }
 
 export default {
-    async fetch(request: Request, _env: unknown): Promise<Response> {
-        const env = envSchema.safeParse(_env);
+    async fetch(request: Request, rawEnv: unknown): Promise<Response> {
+        const env = parseEnv(rawEnv);
 
-        if (!env.success) {
-            return json({ error: env.error.message }, { status: 500 });
+        if ('error' in env) {
+            return json({ error: env.error }, { status: 500 });
         }
 
-        return app.fetch(request, env.data);
+        return app.fetch(request, env);
     },
 };

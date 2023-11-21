@@ -68,5 +68,6 @@ module.exports = defineConfig({
         'unicorn/prefer-top-level-await': 'off',
         'unicorn/prefer-event-target': 'off',
         'unicorn/template-indent': ['error', { indent: 4 }],
+        'unicorn/no-array-reduce': 'off',
     },
 });
