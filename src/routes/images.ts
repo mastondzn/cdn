@@ -11,6 +11,7 @@ export const route = defineRoute({
         let response = await cache.match(cacheKey);
 
         if (response) {
+            response = response.clone();
             response.headers.set('x-cache-status', 'hit');
             return response;
         }
