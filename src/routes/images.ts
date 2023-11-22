@@ -36,7 +36,7 @@ export const route = defineRoute({
 
         response = ctx.newResponse(image.body, { status: 200, headers });
 
-        ctx.executionCtx.waitUntil(cache.put(cacheKey, response));
+        ctx.executionCtx.waitUntil(cache.put(cacheKey, response.clone()));
         response.headers.set('x-cache-status', 'miss');
         return response;
     },
