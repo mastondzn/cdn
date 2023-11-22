@@ -40,7 +40,7 @@ export const route = defineRoute({
         };
 
         const { filename, slug } = await generateFilename();
-        if (!filename || !slug) {
+        if (!filename) {
             return ctx.json({ error: 'Failed to generate unique filename' }, { status: 500 });
         }
 
