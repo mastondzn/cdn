@@ -8,6 +8,12 @@ import { registerMiddlewares, registerRoutes } from './utils';
 const app: Router = new Hono();
 
 app.notFound((ctx) => ctx.json({ error: 'Not found' }, { status: 404 }));
+app.onError((err, ctx) =>
+    ctx.json(
+        { error: `Internal server error (${err.message})`, trace: err.stack },
+        { status: 500 },
+    ),
+);
 
 registerMiddlewares(app, middlewares);
 registerRoutes(app, routes);
