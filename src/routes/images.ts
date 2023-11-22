@@ -5,7 +5,7 @@ export const route = defineRoute({
     path: '/:filename',
     handler: async (ctx) => {
         const filename = ctx.req.param('filename');
-        const cacheKey = new Request(ctx.req.raw.url);
+        const cacheKey = new Request(ctx.req.url);
         const cache = caches.default;
 
         let response = await cache.match(cacheKey);
@@ -34,10 +34,7 @@ export const route = defineRoute({
         headers.set('content-type', contentType);
         headers.set('x-uploaded-at', image.uploaded.toISOString());
 
-        response = ctx.newResponse(image.body, {
-            status: 200,
-            headers,
-        });
+        response = ctx.newResponse(image.body, { status: 200, headers });
 
         ctx.env.waitUntil(cache.put(cacheKey, response));
         response.headers.set('x-cache-status', 'miss');
