@@ -17,8 +17,6 @@ export const route = defineRoute({
             return ctx.json({ error: 'Invalid image extension' }, { status: 400 });
         }
 
-        const { BUCKET } = ctx.env;
-
         const generateFilename = async () => {
             let tries = 0;
 
@@ -27,7 +25,7 @@ export const route = defineRoute({
                 const slug = generateSlug();
                 const filename = `${slug}.${extension}`;
 
-                const existing = await BUCKET.head(`images/${filename}`);
+                const existing = await ctx.env.BUCKET.head(`images/${filename}`);
 
                 if (existing) {
                     tries++;
@@ -46,7 +44,7 @@ export const route = defineRoute({
             return ctx.json({ error: 'Failed to generate unique filename' }, { status: 500 });
         }
 
-        await BUCKET.put(`images/${filename}`, image, {
+        const object = await ctx.env.BUCKET.put(`images/${filename}`, image, {
             customMetadata: {
                 'content-type': image.type,
                 'original-filename': image.name,
@@ -55,7 +53,19 @@ export const route = defineRoute({
             },
         });
 
-        const url = `${new URL(ctx.req.raw.url).origin}/${filename}`;
+        const url = `${new URL(ctx.req.url).origin}/${filename}`;
+
+        // pre-set cache
+        const cacheKey = new Request(url);
+        const cache = caches.default;
+
+        const headers = new Headers();
+        headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
+        headers.set('content-type', image.type);
+        headers.set('x-uploaded-at', object.uploaded.toISOString());
+
+        const response = ctx.newResponse(image.stream(), { status: 200, headers });
+        ctx.env.waitUntil(cache.put(cacheKey, response));
 
         return ctx.json({ status: 'ok', slug, filename, url });
     },
