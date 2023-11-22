@@ -1,7 +1,6 @@
 import { type Handler } from 'hono';
 
-import { type Env } from '~/env';
-import { type Router } from '~/types';
+import { type Env, type Router } from '~/types';
 
 export const defineRoute = <
     const TPath extends string,
@@ -21,10 +20,12 @@ export const defineRoute = <
 
 export type Route = ReturnType<typeof defineRoute>;
 
-export const registerRoute = (app: Router, route: Route) => {
-    if (route.methods === 'all') {
-        app.all(route.path, route.handler);
-    } else {
-        app.on(route.methods, route.path, route.handler);
+export const registerRoutes = (app: Router, routes: Record<string, Route>) => {
+    for (const route of Object.values(routes)) {
+        if (route.methods === 'all') {
+            app.all(route.path, route.handler);
+        } else {
+            app.on(route.methods, route.path, route.handler);
+        }
     }
 };
