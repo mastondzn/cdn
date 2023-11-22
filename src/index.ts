@@ -1,29 +1,13 @@
 import { Hono } from 'hono';
 
-import { type Env, envSchema, parseEnv } from './env';
 import * as middlewares from './middlewares';
 import * as routes from './routes';
-import { type Router } from './types';
-import { json, registerMiddleware, registerRoute } from './utils';
+import { type Env, type Router } from './types';
+import { registerMiddlewares, registerRoutes } from './utils';
 
 const app: Router = new Hono<{ Bindings: Env }>();
 
-for (const middleware of Object.values(middlewares)) {
-    registerMiddleware(app, middleware);
-}
+registerMiddlewares(app, middlewares);
+registerRoutes(app, routes);
 
-for (const route of Object.values(routes)) {
-    registerRoute(app, route);
-}
-
-export default {
-    async fetch(request: Request, rawEnv: unknown): Promise<Response> {
-        const env = parseEnv(rawEnv);
-
-        if ('error' in env) {
-            return json({ error: env.error }, { status: 500 });
-        }
-
-        return app.fetch(request, env);
-    },
-};
+export default app;
