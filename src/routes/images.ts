@@ -38,7 +38,7 @@ export const route = defineRoute({
             headers,
         });
 
-        ctx.event.waitUntil(cache.put(cacheKey, response.clone()));
+        ctx.env.waitUntil(cache.put(cacheKey, response.clone()));
         response.headers.set('x-cache-status', 'miss');
         return response;
     },
