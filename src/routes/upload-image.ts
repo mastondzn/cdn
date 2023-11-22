@@ -65,7 +65,7 @@ export const route = defineRoute({
         headers.set('x-uploaded-at', object.uploaded.toISOString());
 
         const response = ctx.newResponse(image.stream(), { status: 200, headers });
-        ctx.env.waitUntil(cache.put(cacheKey, response));
+        ctx.executionCtx.waitUntil(cache.put(cacheKey, response));
 
         return ctx.json({ status: 'ok', slug, filename, url });
     },

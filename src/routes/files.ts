@@ -5,9 +5,8 @@ export const route = defineRoute({
     path: '/files/:filename',
     handler: async (ctx) => {
         const filename = ctx.req.param('filename');
-        const { BUCKET } = ctx.env;
 
-        const file = await BUCKET.get(`files/${filename}`);
+        const file = await ctx.env.BUCKET.get(`files/${filename}`);
         if (!file) {
             return ctx.notFound();
         }
