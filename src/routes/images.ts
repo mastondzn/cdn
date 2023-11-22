@@ -11,9 +11,9 @@ export const route = defineRoute({
         let response = await cache.match(cacheKey);
 
         if (response) {
-            response = response.clone();
-            response.headers.set('x-cache-status', 'hit');
-            return response;
+            return ctx.newResponse(response.body, {
+                headers: [...response.headers.entries(), ['x-cache-status', 'hit']],
+            });
         }
 
         const image = await ctx.env.BUCKET.get(`images/${filename}`);
