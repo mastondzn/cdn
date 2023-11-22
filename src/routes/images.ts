@@ -5,9 +5,17 @@ export const route = defineRoute({
     path: '/:filename',
     handler: async (ctx) => {
         const filename = ctx.req.param('filename');
-        const { BUCKET } = ctx.env;
+        const cacheKey = new Request(ctx.req.raw.url);
+        const cache = caches.default;
 
-        const image = await BUCKET.get(`images/${filename}`);
+        let response = await cache.match(cacheKey);
+
+        if (response) {
+            response.headers.set('x-cache-status', 'hit');
+            return response;
+        }
+
+        const image = await ctx.env.BUCKET.get(`images/${filename}`);
         if (!image) {
             return ctx.notFound();
         }
@@ -20,13 +28,18 @@ export const route = defineRoute({
             );
         }
 
-        return ctx.newResponse(image.body, {
+        const headers = new Headers();
+        headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
+        headers.set('content-type', contentType);
+        headers.set('x-uploaded-at', image.uploaded.toISOString());
+
+        response = ctx.newResponse(image.body, {
             status: 200,
-            headers: {
-                'content-type': contentType,
-                'cache-control': 'public, max-age=31536000',
-                'x-uploaded-at': image.uploaded.toISOString(),
-            },
+            headers,
         });
+
+        ctx.event.waitUntil(cache.put(cacheKey, response.clone()));
+        response.headers.set('x-cache-status', 'miss');
+        return response;
     },
 });
