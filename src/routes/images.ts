@@ -1,4 +1,5 @@
 import { defineRoute } from '~/utils';
+import { lookupMime } from '~/utils/mime';
 
 export const route = defineRoute({
     methods: ['GET'],
@@ -9,7 +10,6 @@ export const route = defineRoute({
         const cache = caches.default;
 
         let response = await cache.match(cacheKey);
-
         if (response) {
             const headers = new Headers(response.headers);
             headers.set('x-cache-status', 'hit');
@@ -21,17 +21,11 @@ export const route = defineRoute({
             return ctx.notFound();
         }
 
-        const contentType = image.customMetadata?.['content-type'];
-        if (!contentType) {
-            return ctx.json(
-                { error: 'Could not get MIME type from metadata of this bucket object' },
-                { status: 500 },
-            );
-        }
-
         const headers = new Headers();
+
+        const contentType = lookupMime(filename);
+        if (contentType) headers.set('content-type', contentType);
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
-        headers.set('content-type', contentType);
         headers.set('x-uploaded-at', image.uploaded.toISOString());
 
         response = ctx.newResponse(image.body, { status: 200, headers });

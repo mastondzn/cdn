@@ -12,21 +12,18 @@ export const route = defineRoute({
         }
 
         const extension = file.name.split('.').at(-1);
-
         if (!extension) {
             return ctx.json({ error: 'No file extension' }, { status: 400 });
         }
 
-        const { BUCKET } = ctx.env;
-
         const force = ctx.req.query('force') === 'true';
-        const existing = await BUCKET.head(`files/${file.name}`);
+        const existing = await ctx.env.BUCKET.head(`files/${file.name}`);
 
         if (existing && !force) {
             return ctx.json({ error: 'File with this name already exists' }, { status: 400 });
         }
 
-        await BUCKET.put(`files/${file.name}`, file, {
+        await ctx.env.BUCKET.put(`files/${file.name}`, file, {
             customMetadata: {
                 'content-type': file.type,
                 'original-filename': file.name,
@@ -34,7 +31,7 @@ export const route = defineRoute({
             },
         });
 
-        const url = `${new URL(ctx.req.raw.url).origin}/files/${file.name}`;
+        const url = `${new URL(ctx.req.raw.url).origin}/f/${file.name}`;
 
         return ctx.json({ status: 'ok', filename: file.name, url });
     },
