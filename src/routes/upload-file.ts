@@ -1,9 +1,11 @@
-import { defineRoute } from '~/utils';
+import { authMiddleware } from '~/middlewares/auth';
+import { createRoute } from '~/utils/route';
 
-export const route = defineRoute({
-    methods: ['POST'],
-    path: '/upload/file',
-    handler: async (ctx) => {
+export const uploadFileRoute = createRoute(
+    'POST', //
+    '/upload/file',
+    authMiddleware,
+    async (ctx) => {
         const formData = await ctx.req.parseBody();
         const file = formData['file'];
 
@@ -35,4 +37,4 @@ export const route = defineRoute({
 
         return ctx.json({ status: 'ok', filename: file.name, url });
     },
-});
+);

@@ -22,7 +22,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "hono": "^3.10.1",
+        "hono": "^4.1.1",
         "mrmime": "^1.0.1",
         "nanoid": "^5.0.3",
         "zod": "^3.22.4"
@@ -39,7 +39,7 @@
         "eslint-plugin-simple-import-sort": "^10.0.0",
         "eslint-plugin-unicorn": "^49.0.0",
         "prettier": "^3.1.0",
-        "typescript": "^5.2.2",
+        "typescript": "^5.4.2",
         "wrangler": "^3.0.0"
     }
 }

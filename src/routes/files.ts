@@ -1,9 +1,11 @@
-import { defineRoute, lookupMime } from '~/utils';
+import { lookup } from 'mrmime';
 
-export const route = defineRoute({
-    methods: ['GET'],
-    path: '/f/:filename',
-    handler: async (ctx) => {
+import { createRoute } from '~/utils/route';
+
+export const fileRoute = createRoute(
+    'GET', //
+    '/f/:filename',
+    async (ctx) => {
         const filename = ctx.req.param('filename');
         const cacheKey = new Request(ctx.req.url);
         const cache = caches.default;
@@ -22,7 +24,7 @@ export const route = defineRoute({
 
         const headers = new Headers();
 
-        const contentType = lookupMime(filename);
+        const contentType = lookup(filename);
         if (contentType) headers.set('content-type', contentType);
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
         headers.set('x-uploaded-at', file.uploaded.toISOString());
@@ -33,4 +35,4 @@ export const route = defineRoute({
         response.headers.set('x-cache-status', 'miss');
         return response;
     },
-});
+);

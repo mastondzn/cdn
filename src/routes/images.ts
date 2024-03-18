@@ -1,10 +1,11 @@
-import { defineRoute } from '~/utils';
-import { lookupMime } from '~/utils/mime';
+import { lookup } from 'mrmime';
 
-export const route = defineRoute({
-    methods: ['GET'],
-    path: '/:filename',
-    handler: async (ctx) => {
+import { createRoute } from '~/utils/route';
+
+export const imagesRoute = createRoute(
+    'GET', //
+    '/:filename',
+    async (ctx) => {
         const filename = ctx.req.param('filename');
         const cacheKey = new Request(ctx.req.url);
         const cache = caches.default;
@@ -17,14 +18,13 @@ export const route = defineRoute({
         }
 
         const image = await ctx.env.BUCKET.get(`images/${filename}`);
-        if (!image) {
-            return ctx.notFound();
-        }
+        if (!image) return ctx.notFound();
 
         const headers = new Headers();
 
-        const contentType = lookupMime(filename);
+        const contentType = lookup(filename);
         if (contentType) headers.set('content-type', contentType);
+
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
         headers.set('x-uploaded-at', image.uploaded.toISOString());
 
@@ -34,4 +34,4 @@ export const route = defineRoute({
         response.headers.set('x-cache-status', 'miss');
         return response;
     },
-});
+);

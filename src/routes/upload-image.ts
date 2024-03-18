@@ -1,9 +1,12 @@
-import { defineRoute, generateSlug } from '~/utils';
+import { authMiddleware } from '~/middlewares/auth';
+import { createRoute } from '~/utils/route';
+import { generateSlug } from '~/utils/slug';
 
-export const route = defineRoute({
-    methods: ['POST'],
-    path: '/upload/image',
-    handler: async (ctx) => {
+export const uploadImageRoute = createRoute(
+    'POST', //
+    '/upload/image',
+    authMiddleware,
+    async (ctx) => {
         const formData = await ctx.req.parseBody();
         const image = formData['image'];
 
@@ -69,4 +72,4 @@ export const route = defineRoute({
 
         return ctx.json({ status: 'ok', slug, filename, url });
     },
-});
+);

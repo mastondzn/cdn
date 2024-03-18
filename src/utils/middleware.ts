@@ -1,24 +1,7 @@
 import { type MiddlewareHandler } from 'hono';
 
-import { type Env, type Router } from '~/types';
+import { type Env } from '~/types';
 
-// https://hono.dev/concepts/middleware#middleware
-
-export const defineMiddleware = <
-    const TPath extends string,
-    TMiddlewareHandler extends MiddlewareHandler<{ Bindings: Env }, TPath>,
->(middleware: {
-    name?: string;
-    path: TPath;
-    handler: TMiddlewareHandler;
-}) => {
+export const createMiddleware = (middleware: MiddlewareHandler<{ Bindings: Env }>) => {
     return middleware;
-};
-
-export type Middleware = ReturnType<typeof defineMiddleware>;
-
-export const registerMiddlewares = (app: Router, middlewares: Record<string, Middleware>) => {
-    for (const middleware of Object.values(middlewares)) {
-        app.use(middleware.path, middleware.handler);
-    }
 };
