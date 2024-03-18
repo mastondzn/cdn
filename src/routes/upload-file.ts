@@ -8,7 +8,7 @@ export const uploadFileRoute = createRoute(
     authMiddleware,
     async (ctx) => {
         const formData = await ctx.req.parseBody();
-        const file = formData['file'];
+        const file = formData.file;
 
         if (!(file instanceof File)) {
             return ctx.json({ error: 'Invalid image in form data' }, { status: 400 });

@@ -1,43 +1,36 @@
 {
     "name": "@mastondzn/cdn",
-    "description": "Personal image/file uploader, built with Cloudflare Workers & R2.",
+    "type": "module",
     "version": "0.0.1",
     "private": true,
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/mastondzn/cdn.git"
-    },
+    "description": "Personal image/file uploader, built with Cloudflare Workers & R2.",
     "author": {
         "name": "Maston",
         "url": "https://github.com/mastondzn"
     },
     "license": "GPL-3.0-or-later",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mastondzn/cdn.git"
+    },
     "scripts": {
         "deploy": "wrangler deploy",
         "dev": "wrangler dev --port 3002 --local",
         "start": "wrangler dev --port 3002 --local",
         "format": "prettier --write \"**/*.{ts,tsx,md,json,js,mjs,cjs,yml,yaml}\"",
         "format:check": "prettier -c \"**/*.{ts,tsx,md,json,js,mjs,cjs,yml,yaml}\"",
-        "lint": "eslint ./src",
+        "lint": "eslint .",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "hono": "^4.1.1",
         "mrmime": "^1.0.1",
-        "nanoid": "^5.0.3",
-        "zod": "^3.22.4"
+        "nanoid": "^5.0.3"
     },
     "devDependencies": {
         "@cloudflare/workers-types": "^4.20230419.0",
-        "@typescript-eslint/eslint-plugin": "^6.10.0",
-        "@typescript-eslint/parser": "^6.10.0",
-        "eslint": "^8.53.0",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-define-config": "^1.24.1",
-        "eslint-import-resolver-typescript": "^3.6.1",
-        "eslint-plugin-import": "^2.29.0",
-        "eslint-plugin-simple-import-sort": "^10.0.0",
-        "eslint-plugin-unicorn": "^49.0.0",
+        "@mastondzn/eslint": "^0.8.0",
+        "eslint": "^8.57.0",
         "prettier": "^3.1.0",
         "typescript": "^5.4.2",
         "wrangler": "^3.0.0"

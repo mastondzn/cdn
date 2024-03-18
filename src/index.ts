@@ -6,7 +6,7 @@ import { fileRoute } from './routes/files';
 import { imagesRoute } from './routes/images';
 import { uploadFileRoute } from './routes/upload-file';
 import { uploadImageRoute } from './routes/upload-image';
-import { type Env } from './types';
+import type { Env } from './types';
 
 const app = new Hono<{ Bindings: Env }>()
     .use(poweredByMiddleware)

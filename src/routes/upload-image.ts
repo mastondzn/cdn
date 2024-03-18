@@ -9,7 +9,7 @@ export const uploadImageRoute = createRoute(
     authMiddleware,
     async (ctx) => {
         const formData = await ctx.req.parseBody();
-        const image = formData['image'];
+        const image = formData.image;
 
         if (!(image instanceof File)) {
             return ctx.json({ error: 'Invalid image in form data' }, { status: 400 });
@@ -24,7 +24,7 @@ export const uploadImageRoute = createRoute(
         const generateFilename = async () => {
             let tries = 0;
 
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+            // eslint-disable-next-line ts/no-unnecessary-condition
             while (true) {
                 const slug = generateSlug();
                 const filename = `${slug}.${extension}`;
