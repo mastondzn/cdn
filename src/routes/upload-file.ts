@@ -1,4 +1,5 @@
 import { authMiddleware } from '~/middlewares/auth';
+import { getOrigin } from '~/utils/origin';
 import { createRoute } from '~/utils/route';
 
 export const uploadFileRoute = createRoute(
@@ -33,7 +34,7 @@ export const uploadFileRoute = createRoute(
             },
         });
 
-        const url = `${new URL(ctx.req.raw.url).origin}/f/${file.name}`;
+        const url = `${getOrigin(ctx)}/f/${file.name}`;
 
         return ctx.json({ status: 'ok', filename: file.name, url });
     },

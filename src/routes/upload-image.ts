@@ -1,4 +1,5 @@
 import { authMiddleware } from '~/middlewares/auth';
+import { getOrigin } from '~/utils/origin';
 import { createRoute } from '~/utils/route';
 import { generateSlug } from '~/utils/slug';
 
@@ -56,7 +57,7 @@ export const uploadImageRoute = createRoute(
             },
         });
 
-        const url = `${new URL(ctx.req.url).origin}/${filename}`;
+        const url = `${getOrigin(ctx)}/${filename}`;
 
         // pre-set cache
         const cacheKey = new Request(url);
