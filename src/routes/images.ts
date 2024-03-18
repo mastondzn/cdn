@@ -1,6 +1,7 @@
 import { lookup } from 'mrmime';
 
 import { cachedMiddleware } from '~/middlewares/cached';
+import { getCacheKey } from '~/utils/cache';
 import { createRoute } from '~/utils/route';
 
 export const imagesRoute = createRoute(
@@ -23,8 +24,9 @@ export const imagesRoute = createRoute(
 
         const response = ctx.newResponse(image.body, { status: 200, headers });
 
-        const cacheKey = new Request(ctx.req.url);
-        ctx.executionCtx.waitUntil(caches.default.put(cacheKey, response.clone()));
+        ctx.executionCtx.waitUntil(
+            caches.default.put(getCacheKey(ctx), response.clone()), //
+        );
         response.headers.set('x-cache-status', 'miss');
 
         return response;
