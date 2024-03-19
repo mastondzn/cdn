@@ -11,6 +11,7 @@ import type { Env } from './types';
 const app = new Hono<{ Bindings: Env }>()
     .use(poweredByMiddleware)
     .use(redirectsMiddleware)
+    .get('/', (ctx) => ctx.json({ message: 'Hello from mastondzn/cdn!' }))
     .route('/', fileRoute)
     .route('/', imagesRoute)
     .route('/', uploadFileRoute)
