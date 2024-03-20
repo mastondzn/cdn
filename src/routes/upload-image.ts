@@ -21,34 +21,16 @@ export const uploadImageRoute = createRoute(
             return ctx.json({ error: 'Invalid image extension' }, { status: 400 });
         }
 
-        const generateFilename = async () => {
-            let tries = 0;
+        const slug = generateSlug();
+        const filename = `${slug}.${extension}`;
+        const key = `images/${filename}`;
 
-            // eslint-disable-next-line ts/no-unnecessary-condition
-            while (true) {
-                const slug = generateSlug();
-                const filename = `${slug}.${extension}`;
-
-                const existing = await ctx.env.BUCKET.head(`images/${filename}`);
-
-                if (existing) {
-                    tries++;
-                } else {
-                    return { filename, slug };
-                }
-
-                if (tries > 2) {
-                    return { filename: null, slug: null };
-                }
-            }
-        };
-
-        const { filename, slug } = await generateFilename();
-        if (!filename) {
-            return ctx.json({ error: 'Failed to generate unique filename' }, { status: 500 });
+        const existing = await ctx.env.BUCKET.head(key);
+        if (existing) {
+            return ctx.json({ error: 'Failed to create unique slug' }, { status: 500 });
         }
 
-        const object = await ctx.env.BUCKET.put(`images/${filename}`, image, {
+        const object = await ctx.env.BUCKET.put(key, image, {
             customMetadata: {
                 'content-type': image.type,
                 'original-filename': image.name,
