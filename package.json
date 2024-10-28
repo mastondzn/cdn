@@ -23,16 +23,16 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "hono": "^4.1.1",
-        "mrmime": "^1.0.1",
-        "nanoid": "^5.0.3"
+        "hono": "^4.6.7",
+        "mrmime": "^2.0.0",
+        "nanoid": "^5.0.7"
     },
     "devDependencies": {
-        "@cloudflare/workers-types": "^4.20230419.0",
-        "@mastondzn/eslint": "^0.8.0",
+        "@cloudflare/workers-types": "^4.20241022.0",
+        "@mastondzn/eslint": "^0.10.0",
         "eslint": "^8.57.0",
-        "prettier": "^3.1.0",
-        "typescript": "^5.4.2",
-        "wrangler": "^3.0.0"
+        "prettier": "^3.3.3",
+        "typescript": "^5.6.3",
+        "wrangler": "^3.83.0"
     }
 }
