@@ -43,15 +43,13 @@ export const uploadImageRoute = createRoute(
 
         // pre-set cache
         const cacheKey = new Request(url);
-        const cache = caches.default;
-
         const headers = new Headers();
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
         headers.set('content-type', image.type);
         headers.set('x-uploaded-at', object.uploaded.toISOString());
 
         const response = ctx.newResponse(image.stream(), { status: 200, headers });
-        ctx.executionCtx.waitUntil(cache.put(cacheKey, response));
+        ctx.executionCtx.waitUntil(caches.default.put(cacheKey, response));
 
         return ctx.json({ status: 'ok', slug, filename, url });
     },
