@@ -3,10 +3,8 @@
         "target": "es2021",
         "lib": ["es2022"],
         "module": "es2022",
-        "moduleResolution": "Bundler",
-        "paths": {
-            "~/*": ["./src/*"]
-        },
+        "moduleResolution": "bundler",
+        "paths": { "~/*": ["./src/*"] },
         "resolveJsonModule": true,
         "types": ["@cloudflare/workers-types"],
         "allowJs": true,
