@@ -1,11 +1,11 @@
-import { authMiddleware } from '~/middlewares/auth';
+import { auth } from '~/middlewares/auth';
 import { getOrigin } from '~/utils/origin';
-import { createRoute } from '~/utils/route';
+import { route } from '~/utils/route';
 
-export const uploadFileRoute = createRoute(
+export const uploadFile = route(
     'POST', //
     '/upload/file',
-    authMiddleware,
+    auth,
     async (ctx) => {
         const formData = await ctx.req.parseBody();
         const file = formData.file;

@@ -1,8 +1,8 @@
 import { bearerAuth } from 'hono/bearer-auth';
 
-import { createMiddleware } from '~/utils/middleware';
+import { middleware } from '~/utils/middleware';
 
-export const authMiddleware = createMiddleware(async (ctx, next) => {
+export const auth = middleware(async (ctx, next) => {
     const middleware = bearerAuth({
         token: ctx.env.APP_SECRET,
         noAuthenticationHeaderMessage: { error: 'No token provided' },

@@ -1,12 +1,12 @@
 import { getCacheKey } from '~/utils/cache';
-import { createMiddleware } from '~/utils/middleware';
+import { middleware } from '~/utils/middleware';
 
-export const cachedMiddleware = createMiddleware(async (ctx, next) => {
+export const cached = middleware(async (ctx, next) => {
     const response = await caches.default.match(getCacheKey(ctx));
+
     if (response) {
-        const headers = new Headers(response.headers);
-        headers.set('x-cache-status', 'hit');
-        return ctx.newResponse(response.body, { ...response, headers });
+        response.headers.set('x-cache-status', 'hit');
+        return ctx.newResponse(response.body, response);
     }
 
     await next();

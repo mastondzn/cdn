@@ -1,13 +1,13 @@
 import { lookup } from 'mrmime';
 
-import { cachedMiddleware } from '~/middlewares/cached';
+import { cached } from '~/middlewares/cached';
 import { getCacheKey } from '~/utils/cache';
-import { createRoute } from '~/utils/route';
+import { route } from '~/utils/route';
 
-export const fileRoute = createRoute(
+export const files = route(
     'GET', //
     '/f/:filename',
-    cachedMiddleware,
+    cached,
     async (ctx) => {
         const filename = ctx.req.param('filename');
 
