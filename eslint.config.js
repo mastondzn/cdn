@@ -1,13 +1,8 @@
-import { defineConfig } from '@mastondzn/eslint';
+import { maston } from '@mastondzn/eslint';
 
-export default defineConfig({
-    stylistic: false,
-
+export default maston({
     typescript: {
-        tsconfigPath: './tsconfig.json',
-    },
-
-    rules: {
-        'unicorn/prevent-abbreviations': 'off',
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
     },
 });
