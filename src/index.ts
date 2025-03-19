@@ -17,7 +17,7 @@ const app = new Hono<HonoEnv>()
 app.onError((error, ctx) => {
     if (error instanceof HTTPException) return error.getResponse();
     // eslint-disable-next-line no-console
-    console.log(error);
+    console.log(error, error.stack);
     return ctx.json({ error: `Internal server error` }, { status: 500 });
 });
 

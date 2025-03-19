@@ -5,8 +5,13 @@ export const cached = middleware(async (ctx, next) => {
     const response = await caches.default.match(getCacheKey(ctx));
 
     if (response) {
-        response.headers.set('x-cache-status', 'hit');
-        return ctx.newResponse(response.body, response);
+        const headers = new Headers(response.headers);
+        headers.set('x-cache-status', 'hit');
+        return new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers,
+        });
     }
 
     await next();
