@@ -66,17 +66,11 @@ export const upload = route(
             },
         });
 
-        const url = `${getOrigin(ctx)}/${filename}`;
-
-        // pre-set cache
-        // const cacheKey = new Request(url);
-        // const headers = new Headers();
-        // headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
-        // headers.set('content-type', file.type);
-        // headers.set('x-uploaded-at', object.uploaded.toISOString());
-        // const response = ctx.newResponse(bytes, { status: 200, headers });
-        // ctx.executionCtx.waitUntil(caches.default.put(cacheKey, response));
-
-        return ctx.json({ status: 'ok', slug, filename, url });
+        return ctx.json({
+            status: 'ok',
+            url: `${getOrigin(ctx)}/${filename}`,
+            slug,
+            filename,
+        });
     },
 );
