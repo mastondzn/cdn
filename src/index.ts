@@ -7,8 +7,6 @@ import * as routes from './routes';
 
 const app = new Hono<HonoEnv>()
     .use(middlewares.injectDb)
-    .use(middlewares.poweredBy)
-    .use(middlewares.redirects)
     .route('/', routes.files)
     .route('/', routes.upload)
     .route('/', routes.root)
