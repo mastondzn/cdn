@@ -17,7 +17,7 @@
         "dev": "wrangler dev --port 3002 --tsconfig tsconfig.worker.json",
         "start": "pnpm dev",
         "build": "wrangler deploy --dry-run --outdir=dist --tsconfig=tsconfig.worker.json",
-        "deploy": "wrangler deploy --tsconfig tsconfig.worker.json",
+        "deployy": "wrangler deploy --tsconfig tsconfig.worker.json",
         "types": "wrangler types",
         "format": "prettier --write .",
         "format:check": "prettier -c .",
