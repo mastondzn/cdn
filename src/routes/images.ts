@@ -19,7 +19,6 @@ export const files = route(
         if (contentType) headers.set('content-type', contentType);
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
         headers.set('x-uploaded-at', image.uploaded.toISOString());
-        headers.set('x-cache-status', 'miss');
 
         return ctx.body(image.body, { status: 200, headers });
     },
