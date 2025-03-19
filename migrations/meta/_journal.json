@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1742363720593,
+      "tag": "0000_clumsy_ken_ellis",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1742366013025,
+      "tag": "0001_curved_layla_miller",
+      "breakpoints": true
+    }
+  ]
+}

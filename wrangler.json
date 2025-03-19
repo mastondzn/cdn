@@ -1,0 +1,15 @@
+{
+    "$schema": "https://unpkg.com/wrangler@latest/config-schema.json",
+    "name": "cdn",
+    "main": "src/index.ts",
+    "compatibility_date": "2025-03-10",
+    "routes": [{ "pattern": "i.maston.dev/*", "zone_name": "maston.dev" }],
+    "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "content" }],
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "cdn",
+            "database_id": "74cb201f-e30e-473f-952b-a84724f01fc2"
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 import type { MiddlewareHandler } from 'hono';
 
-import type { Env } from '~/types';
+import type { HonoEnv } from '~/types';
 
-export const middleware = (middleware: MiddlewareHandler<{ Bindings: Env }>) => middleware;
+export const middleware = (middleware: MiddlewareHandler<HonoEnv>) => middleware;

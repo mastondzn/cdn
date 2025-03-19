@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "tsBuildInfoFile": "node_modules/.tmp/worker.tsbuildinfo",
+        "target": "es2021",
+        "lib": ["es2022"],
+        "module": "preserve",
+        "paths": {
+            "~/*": ["./src/*"]
+        },
+        "resolveJsonModule": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noEmit": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "skipLibCheck": true
+    },
+    "include": ["./src/**/*.ts", "worker-configuration.d.ts"]
+}

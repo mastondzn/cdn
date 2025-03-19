@@ -1,0 +1,1 @@
+ALTER TABLE `files` ADD `file_last_modified` text NOT NULL;

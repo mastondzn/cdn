@@ -10,4 +10,9 @@ export const cached = middleware(async (ctx, next) => {
     }
 
     await next();
+
+    if (ctx.res.headers.get('cache-control')?.includes('no-store')) return;
+    ctx.executionCtx.waitUntil(
+        caches.default.put(getCacheKey(ctx), ctx.res.clone()), //
+    );
 });

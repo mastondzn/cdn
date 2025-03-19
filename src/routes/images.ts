@@ -1,10 +1,9 @@
 import { lookup } from 'mrmime';
 
 import { cached } from '~/middlewares/cached';
-import { getCacheKey } from '~/utils/cache';
 import { route } from '~/utils/route';
 
-export const images = route(
+export const files = route(
     'GET', //
     '/:filename',
     cached,
@@ -18,17 +17,10 @@ export const images = route(
 
         const contentType = lookup(filename);
         if (contentType) headers.set('content-type', contentType);
-
         headers.set('cache-control', 'public, max-age=14400, s-maxage=14400');
         headers.set('x-uploaded-at', image.uploaded.toISOString());
+        headers.set('x-cache-status', 'miss');
 
-        const response = ctx.newResponse(image.body, { status: 200, headers });
-
-        ctx.executionCtx.waitUntil(
-            caches.default.put(getCacheKey(ctx), response.clone()), //
-        );
-        response.headers.set('x-cache-status', 'miss');
-
-        return response;
+        return ctx.body(image.body, { status: 200, headers });
     },
 );
