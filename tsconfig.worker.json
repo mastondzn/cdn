@@ -8,6 +8,7 @@
             "~/*": ["./src/*"]
         },
         "resolveJsonModule": true,
+        "types": [],
         "strict": true,
         "noUncheckedIndexedAccess": true,
         "noEmit": true,

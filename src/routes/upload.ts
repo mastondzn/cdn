@@ -2,6 +2,7 @@ import { sValidator } from '@hono/standard-validator';
 import { eq } from 'drizzle-orm';
 import * as z from 'zod';
 
+import { db } from '~/db';
 import { files } from '~/db/schema';
 import { auth } from '~/middlewares/auth';
 import { hashBytes } from '~/utils/hash';
@@ -29,7 +30,7 @@ export const upload = route(
         const bytes = await file.bytes();
         const hash = hashBytes(bytes);
 
-        const [entry] = await ctx.var.db.select().from(files).where(eq(files.hash, hash)).execute();
+        const [entry] = await db.select().from(files).where(eq(files.hash, hash)).execute();
         if (entry) {
             const extension = entry.filename.split('.').at(-1);
             const url = `${getOrigin(ctx)}/${entry.slug}.${extension}`;
@@ -45,7 +46,7 @@ export const upload = route(
         const filename = `${slug}.${extension}`;
         const key = `images/${filename}`;
 
-        await ctx.var.db
+        await db
             .insert(files)
             .values({
                 hash,

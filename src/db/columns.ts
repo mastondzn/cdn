@@ -5,6 +5,6 @@ export const timestamp = customType<{
     driverData: string;
 }>({
     dataType: () => 'text',
-    fromDriver: (value: string): Date => new Date(value),
-    toDriver: (value: Date): string => value.toISOString(),
+    fromDriver: (value) => new Date(value),
+    toDriver: (value) => value.toISOString(),
 });

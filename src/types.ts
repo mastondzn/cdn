@@ -6,5 +6,4 @@ export type Database = DrizzleD1Database<typeof schema>;
 
 export interface HonoEnv {
     Bindings: Env;
-    Variables: { db: Database };
 }

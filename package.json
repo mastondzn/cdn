@@ -3,6 +3,7 @@
     "type": "module",
     "version": "0.0.1",
     "private": true,
+    "packageManager": "pnpm@10.6.5",
     "description": "Personal image/file uploader, built with Cloudflare Workers & R2.",
     "author": {
         "name": "Maston",
@@ -22,11 +23,10 @@
         "format": "prettier --write .",
         "format:check": "prettier -c .",
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "tsc --noEmit -p tsconfig.worker.json",
         "db:generate": "drizzle-kit generate",
         "db:migrate:local": "wrangler d1 migrations apply cdn --local",
-        "db:migrate:remote": "drizzle-kit migrate",
-        "with-env": "dotenv-cli --"
+        "db:migrate:remote": "drizzle-kit migrate"
     },
     "dependencies": {
         "@hono/standard-validator": "^0.1.2",
@@ -39,8 +39,7 @@
     },
     "devDependencies": {
         "@mastondzn/eslint": "^1.2.0",
-        "@types/node": "^22.13.10",
-        "dotenv-cli": "^8.0.0",
+        "@types/node": "^22.13.11",
         "drizzle-kit": "^0.30.5",
         "eslint": "^9.22.0",
         "prettier": "^3.5.3",
