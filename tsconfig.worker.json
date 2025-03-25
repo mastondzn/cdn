@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "tsBuildInfoFile": "node_modules/.tmp/worker.tsbuildinfo",
-        "target": "es2021",
+        "target": "es2022",
         "lib": ["es2022"],
         "module": "preserve",
         "paths": {

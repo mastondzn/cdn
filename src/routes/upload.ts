@@ -1,4 +1,5 @@
 import { sValidator } from '@hono/standard-validator';
+import { env } from 'cloudflare:workers';
 import { eq } from 'drizzle-orm';
 import * as z from 'zod';
 
@@ -58,7 +59,7 @@ export const upload = route(
             })
             .execute();
 
-        await ctx.env.BUCKET.put(key, file, {
+        await env.BUCKET.put(key, file, {
             customMetadata: {
                 'content-type': file.type,
                 'original-filename': file.name,

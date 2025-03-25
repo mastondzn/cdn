@@ -1,3 +1,4 @@
+import { env } from 'cloudflare:workers';
 import { lookup } from 'mrmime';
 
 import { cached } from '~/middlewares/cached';
@@ -10,7 +11,7 @@ export const files = route(
     async (ctx) => {
         const filename = ctx.req.param('filename');
 
-        const image = await ctx.env.BUCKET.get(`images/${filename}`);
+        const image = await env.BUCKET.get(`images/${filename}`);
         if (!image) return ctx.notFound();
 
         const headers = new Headers();

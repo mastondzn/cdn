@@ -7,7 +7,5 @@ export default maston(
             tsconfigRootDir: import.meta.dirname,
         },
     },
-    {
-        ignores: ['worker-configuration.d.ts', 'migrations'],
-    },
+    { ignores: ['worker-configuration.d.ts', 'migrations'] },
 );
